@@ -18,7 +18,7 @@
   * Basic To Do List Management, using Hooks
 
 ### PULL REQUEST :
-  [pull request](https://github.com/Sukina12/todo-app/pull/1)
+  [pull request](https://github.com/Sukina12/todo-app/pull/2)
 
 ### Test:
 
