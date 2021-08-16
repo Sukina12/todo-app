@@ -1,22 +1,26 @@
-import React, { Component } from 'react'
-export const ManageAppContext = React.createContext();
+import React from 'react';
+export const SettingContext = React.createContext();
+import {useState} from 'react';
 
-export default class ManageApp extends Component {
-  constructor(props){
-    super(props);
-    this.state ={
-      showCompleted :false,
-      numItem:5,
-      sortField:'Ascending',
-    }
+ function SettingProvider(props) {
+  const [completed, setCompleted] = useState(false);
+  const [sorted, setSorted] = useState('Ascending');
+  const [pageItems, setPageItems] = useState(4);
+
+  const settingState ={
+    completed,
+    sorted,
+    pageItems,
+    setCompleted,
+    setSorted,
+    setPageItems,
   }
-  render() {
-    return (
-      <ManageAppContext.Provider value={this.state}>
-        {this.props.children}
-      </ManageAppContext.Provider>
-    )
-  }
+  return (
+    <SettingContext.Provider value={settingState}>
+       {props.children} 
+    </SettingContext.Provider>
+  )
 }
 
+export default SettingProvider;
 
