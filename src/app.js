@@ -1,22 +1,15 @@
 import React from 'react';
 
-import ToDo from './components/todo/todo.js';
-// import List from './components/List';
-import Header from './components/header/Header.js';
-// import Main from './components/Main.js';
-import ManageAppContextProvider from './context/setting/context.js';
+import ToDo from './components/todo/todo';
+import SettingContextProvider from './context/setting/context';
 
 export default class App extends React.Component {
   render() {
     return (
-      <React.Fragment>
-        < ManageAppContextProvider>
-          <Header />
-          <ToDo />
-          {/* <List/> */}
-        </ManageAppContextProvider>
-        {/* <Main/> */}
-      </React.Fragment>
+      <SettingContextProvider>
+
+        <ToDo />
+      </SettingContextProvider>
     );
   }
 }
