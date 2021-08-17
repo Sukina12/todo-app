@@ -18,10 +18,13 @@
   * Basic To Do List Management, using Hooks
 
 ### PULL REQUEST :
+  ### Lab 31 :
   [pull request](https://github.com/Sukina12/todo-app/pull/2)
 
-### Test:
+### UML:
+![UML](UML.PNG)
 
 ### Deployment:
+[My URL](https://todo-app-sukina.netlify.app/)
 
 
