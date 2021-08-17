@@ -70,7 +70,7 @@ function List(props) {
             </Else>
           </>
         ))}
-      {length >= 4 && 
+      {length >4 && 
       <div className='buttons'>
         <Button onClick={prevPage}> Previous </Button>
         <Button onClick={nextPage}> Next </Button>
