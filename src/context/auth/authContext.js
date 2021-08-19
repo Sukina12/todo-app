@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { cookie } from 'react-cookies';
+import cookie from 'react-cookies';
 import jwt from 'jsonwebtoken';
 import superagent from 'superagent';
 import base64 from 'base-64';
-import axios from 'axios';
+// import axios from 'axios';
 
 export const AuthContext = React.createContext();
 
@@ -14,10 +14,10 @@ export default function authContext(props) {
   const [loginState, setLoginState] = useState(false);
   const [user, setUser] = useState({});
    
-  // useEffect(()=>{
-  //   const token = cookie.load('auth');
-  //   validateToken(token);
-  // })
+  useEffect(()=>{
+    const token = cookie.load('auth');
+    validateToken(token);
+  },[])
   async function signIn(userName, password) {
     try {
       const response = await superagent
