@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 const todoAPI = "https://api-js401.herokuapp.com/api/v1/todo";
 
-function useAjax() {
+function UseAxios() {
   const [list, setList] = useState([]);
 
   function _deleteComplete(id) {
@@ -16,12 +16,12 @@ function useAjax() {
         },
       })
       .then((res) => {
-        setList(
-          list.filter((item) => {
-            item._id !== res.data._id;
-          })
-        );
-      });
+        const items = list.filter((item) => {
+          item._id !== id;
+        })
+        setList(items);
+    });
+    _getTodoItems();
   }
 
   function _addItem(item) {
@@ -82,5 +82,5 @@ function useAjax() {
    return [list,_addItem,_deleteComplete,_toggleComplete,_getTodoItems];
 
 };
-export default useAjax;
+export default UseAxios;
 

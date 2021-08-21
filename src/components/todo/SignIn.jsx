@@ -34,12 +34,14 @@ export default function SignIn() {
           <form onSubmit={handleSubmit}>
             <input
               required
+              type ='text'
               placeholder="UserName"
               name="username"
               onChange={handleChange}
             />
             <input
               required
+              type='password'
               placeholder="Password"
               name="password"
               onChange={handleChange}

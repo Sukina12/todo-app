@@ -6,34 +6,36 @@ import List from "./List";
 import SignUp from "./SignUp";
 import SignIn from "./SignIn";
 import Header from "../header/Header";
-import { v4 as uuid } from "uuid";
+// import { v4 as uuid } from "uuid";
 import "@blueprintjs/core/lib/css/blueprint.css";
 import Options from "./Options";
+import UseAxios from '../../hooks/useAxios'
 
 const ToDo = () => {
   
-  const [list, setList] = useState([]);
+  // const [list, setList] = useState([]);
   const [incomplete, setIncomplete] = useState([]);
+  const [list,_addItem,_deleteComplete,_toggleComplete,_getTodoItems]=UseAxios();
 
-  function addItem(item){
-    let data = {id:uuid() , text:item.text, assignee:item.assignee, complete:false, difficulty: item.difficulty};
-    setList ([...list,data]);
-  }
+  // function addItem(item){
+  //   let data = {id:uuid() , text:item.text, assignee:item.assignee, complete:false, difficulty: item.difficulty};
+  //   setList ([...list,data]);
+  // }
 
-  function toggleComplete (id){
-    const items = list.map (item =>{
-      if (item.id === id){
-        item.complete = !item.complete;
-      }
-      return item;
-    });
-    setList (items);
-  }
+  // function toggleComplete (id){
+  //   const items = list.map (item =>{
+  //     if (item.id === id){
+  //       item.complete = !item.complete;
+  //     }
+  //     return item;
+  //   });
+  //   setList (items);
+  // }
 
-  function deleteItem(id) {
-    const items = list.filter((item) => item.id !== id);
-    setList(items);
-  }
+  // function deleteItem(id) {
+  //   const items = list.filter((item) => item.id !== id);
+  //   setList(items);
+  // }
 
   useEffect (()=>{
     let inCompleteItems = list.filter (item => !item.complete).length;
@@ -68,13 +70,13 @@ const ToDo = () => {
           <Options/>
         </div>
         <div>
-          <Form addItem={addItem} />
+          <Form addItem={_addItem} />
         </div>
         <div>
           <List
             list={list}
-            toggleComplete={toggleComplete}
-            deleteItem={deleteItem}
+            toggleComplete={_toggleComplete}
+            deleteItem={_deleteComplete}
           />
         </div>
       </section>
