@@ -7,7 +7,7 @@ export default function SignUp() {
   const authContext = useContext(AuthContext);
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
+  // const [email, setEmail] = useState('');
   const [role, setRole] = useState('user');
 
   function changeUsername(e) {
@@ -17,9 +17,9 @@ export default function SignUp() {
 	function changePassword(e) {
 		setPassword(e.target.value);
 	}
-  function changeEmail(e) {
-		setEmail(e.target.value);
-	}
+  // function changeEmail(e) {
+	// 	setEmail(e.target.value);
+	// }
 
 	function handleChangeRole(e) {
 		setRole(e.target.value);
@@ -29,7 +29,7 @@ export default function SignUp() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    authContext.signUp(userName, password, email, role);
+    authContext.signUp(userName, password, role);
   }
 
   return (
@@ -40,21 +40,23 @@ export default function SignUp() {
         </Then>
         <Else>
           <form onSubmit={handleSubmit}>
-            <input
+            {/* <input
               required
               type="email"
               placeholder="email"
               name="email"
               onChange={changeEmail}
-            />
+            /> */}
             <input
               required
+              type='text'
               placeholder="UserName"
               name="username"
               onChange={changeUsername}
             />
             <input
               required
+              type='password'
               placeholder="Password"
               name="password"
               onChange={changePassword}

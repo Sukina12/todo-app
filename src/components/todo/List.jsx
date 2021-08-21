@@ -60,8 +60,8 @@ const pages=()=>{
           <p>{item.text}</p>
           <p><small>Assigned to: {item.assignee}</small></p>
           <p><small>Difficulty: {item.difficulty}</small></p>
-          <div onClick={() => props.toggleComplete(item.id)}>Complete: {item.complete.toString()}</div>
-          <button onClick ={() => props.deleteItem(item.id)}>Delete</button>
+          <div onClick={() => props.toggleComplete(item._id)}>Complete: {item.complete.toString()}</div>
+          <button onClick ={() => props.deleteItem(item._id)}>Delete</button>
         </Card>
       ))}
      {activePage>1 && <Button style={{backgroundColor:'#ffb3b3'}} onClick={()=>{setActivePage(activePage-1)}}>prev</Button>}
