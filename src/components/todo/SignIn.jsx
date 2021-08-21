@@ -1,57 +1,53 @@
-import React,{useContext, useState} from 'react';
-import { AuthContext } from '../../context/auth/authContext';
+import React, { useContext, useState } from "react";
+import { AuthContext } from "../../context/auth/authContext";
+import { If, Else, Then } from "react-if";
 import { Button } from "@blueprintjs/core";
-import './form.css'
-
-function If (props){
-  return props.condition ? props.children : null;
-};
 
 export default function SignIn() {
+  const authContext = useContext(AuthContext);
   const [userInfo, setUserInfo] = useState({
-    userName:'',
-    password:'',
+    userName:  '',
+    password: '',
   });
-
-  const authContext  = useContext(AuthContext);
 
   function handleChange(e) {
     let value = e.target.value;
     let name = e.target.name;
 
-    setUserInfo ({
+    setUserInfo({
       ...userInfo,
-      [name]:value,
+      [name]: value,
     });
-  };
-  
-  function handleSubmit(e){
+  }
+
+  function handleSubmit(e) {
     e.preventDefault();
-    authContext.signIn(userInfo.userName,userInfo.password);
-  };
+    authContext.signIn(userInfo.userName, userInfo.password);
+  }
   return (
     <div>
-      <If condition={authContext.loginState}>
-        <button onClick={authContext.signOut}> Sign Out </button>
+      <If condition={authContext.loggedIn}>
+        <Then>
+          <Button onClick={authContext.signOut}> Sign Out </Button>
+        </Then>
+        <Else>
+          <form onSubmit={handleSubmit}>
+            <input
+              required
+              placeholder="UserName"
+              name="username"
+              onChange={handleChange}
+            />
+            <input
+              required
+              placeholder="Password"
+              name="password"
+              onChange={handleChange}
+            />
+            <button style={{backgroundColor:'#ffb3b3'}} type="submit">Sign In</button>
+          </form>
+        </Else>
       </If>
-      <If condition={!authContext.loginState}>
-        <form onSubmit={handleSubmit}>
-           <input
-             required
-             placeholder='UserName'
-             name='username'
-             onChange={handleChange}
-           />
-             <input
-             required
-             placeholder='Password'
-             name='password'
-             onChange={handleChange}
-           />
-           <button type='submit'>Sign In</button>
-        </form>
-      </If>
-      
     </div>
   );
-};
+}

@@ -1,20 +1,27 @@
 import React from 'react';
 export const SettingContext = React.createContext();
-import {useState} from 'react';
+import {useState,useEffect} from 'react';
 
- function SettingProvider(props) {
-  const [completed, setCompleted] = useState(false);
-  const [sorted, setSorted] = useState('Ascending');
-  const [pageItems, setPageItems] = useState(4);
+ function Context(props) {
+   const [pageItems, setPageItems] = useState(4);
+  const [completed, setCompleted] = useState(true);
 
   const settingState ={
     completed,
-    sorted,
     pageItems,
     setCompleted,
-    setSorted,
     setPageItems,
   }
+  useEffect (()=>{
+    const localSetting = JSON.parse (localStorage.getItem('setting'));
+    if(localSetting){
+      setPageItems(Number(localSetting.pageItems));
+      setCompleted(completed);
+    }
+  },[]);
+  useEffect(()=>{
+    console.log(pageItems);
+  },[pageItems]);
   return (
     <SettingContext.Provider value={settingState}>
        {props.children} 
@@ -22,4 +29,4 @@ import {useState} from 'react';
   )
 }
 
-export default SettingProvider;
+export default Context;

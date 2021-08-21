@@ -1,13 +1,19 @@
-import React from 'react';
+import React from "react";
+import { Navbar, Container } from "react-bootstrap";
 
 function Header(props) {
-
   return (
-    <header>
-      <h1>To Do List: {props.incomplete} items pending</h1>
-    </header>
-  )
-
+    <React.Fragment>
+      <Navbar bg={props.color} variant="dark">
+        <Container>
+          <h1 style={{color:'#ffb3b3'}}>
+            There are {props.list.filter((item) => !item.complete).length} Items
+            To Complete
+          </h1>
+        </Container>
+      </Navbar>
+    </React.Fragment>
+  );
 }
 
 export default Header;

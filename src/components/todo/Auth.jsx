@@ -1,19 +1,16 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../context/auth/authContext";
-
-function If(props) {
-  return props.condition ? props.children : null;
-}
+import {If} from 'react-if';
 
 export default function Auth(props) {
   const authContext = useContext(AuthContext);
   let render = false;
   try {
     render =
-      authContext.logIn &&
+      authContext.loggedIn &&
       (props.capability
         ? authContext.user.capabilities.includes(props.capability)
-        : true);
+        : false);
   } catch (error) {
     console.log("No Authorization");
   }
