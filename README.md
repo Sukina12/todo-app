@@ -28,7 +28,7 @@
   [pullRequestLab33](https://github.com/Sukina12/todo-app/pull/6)
   
   ### Lab 34 :
-  [pullRequestLab34](https://github.com/Sukina12/todo-app/pull/5)
+  [pullRequestLab34](https://github.com/Sukina12/todo-app/pull/7)
 
 ### UML:
 ![UML](UML.PNG)
