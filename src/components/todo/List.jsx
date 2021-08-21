@@ -1,82 +1,75 @@
 import React, { useContext, useState, useEffect } from "react";
-import { ListGroup, Button } from "react-bootstrap";
-import { If, Else } from "../if/If";
+import { Button,Card,Elevation } from '@blueprintjs/core';
 import { SettingContext } from "../../context/setting/context";
-import ItemCard from "./Card";
+
 
 function List(props) {
   const settingContext = useContext(SettingContext);
-  const [index, setIndex] = useState(0);
-  const [stopIndex, setStopIndex] = useState(settingContext.pageItems);
+  const [activeList, setActiveList] = useState([]);
+  const [activePage, setActivePage] = useState(1);
+  const [numOfPages, setNumOfPages] = useState(Math.ceil(props.list.length/settingContext.pageItems));
 
-  let length = props.list.length;
 
-  function nextPage() {
-    if (stopIndex < length) {
-      setIndex(index + settingContext.pageItems);
-      setStopIndex(stopIndex + settingContext.pageItems);
+  useEffect(()=>{
+    let start = (activePage - 1)*settingContext.pageItems;
+    let last = start + settingContext.pageItems;
+    setNumOfPages(Math.ceil(props.list.length/settingContext.pageItems)); 
+    setActiveList(props.list.slice(start,last)); 
+},[props.list.length]);
+
+useEffect(()=>{
+    if(settingContext.completed){
+        let start = (activePage - 1)*settingContext.pageItems;
+        let last = start + settingContext.pageItems;
+        setActiveList(props.list.slice(start,last));
+        setNumOfPages(Math.ceil(props.list.length/settingContext.pageItems));
+    }else{
+       let temp = props.list.filter((item)=>{
+            return item.complete===false
+        })
+        let start = (activePage - 1)*settingContext.pageItems;
+        let last = start + settingsContext.pageItems;
+        setActiveList(temp.slice(start,last));
+        setNumOfPages(Math.ceil(temp.length/settingContext.pageItems))
     }
-  }
+},[activePage,settingContext.Completed]);
 
-  function prevPage () {
-    if (index>0){
-       setIndex(index - settingContext.pageItems);
-      setStopIndex(stopIndex - settingContext.pageItems);
+
+function changeActivePage(num){
+    setActivePage(num);
+}
+
+function toggleView(){
+    settingContext.setCompleted( !settingContext.Completed );
+}
+
+const pages=()=>{
+    let page =[];
+    for(let i=1;i<=numOfPages;i++){
+       page.push(<Button style={{backgroundColor:'#ffb3b3'}} onClick={()=>{changeActivePage(i)}} key={i}>{i}</Button>)
     }
-  }
+    return page;
+}
 
   return (
-    <ListGroup>
-    {props.list
-        .filter(item => (settingContext.completed ? true : !item.complete))
-        .sort((item1, item2) => {
-          let x;
-          settingContext.difficulty === 'Ascending' ? (x = 1) : (x = -1);
-          if (item1.difficulty > item2.difficulty) {
-            return x;
-          }
-          if (item1.difficulty < item2.difficulty) {
-            return x * -1;
-          } else {
-            return 0;
-          }
-        })
-        .slice(index, stopIndex)
-        .map(item => (
-          <>
-            <If condition={item.complete}>
-              <ItemCard
-                color={'success'}
-                asignee={item.assignee}
-                title={item.text}
-                diff={item.difficulty}
-                key={item._id}
-                callDelete={() => { props.deleteItem(item._id);}}
-                callToggle={() => { props.toggleComplete(item._id);}}
-                badge={'Completed'}
-              />
-            </If>
-            <Else condition={item.complete}>
-              <ItemCard
-                color={'danger'}
-                asignee={item.assignee}
-                title={item.text}
-                diff={item.difficulty}
-                key={item._id}
-                callDelete={() => { props.deleteItem(item._id);}}
-                callToggle={() => { props.toggleComplete(item._id);}}
-                badge={'In Progress'}
-              />
-            </Else>
-          </>
-        ))}
-      {length >4 && 
-      <div className='buttons'>
-        <Button onClick={prevPage}> Previous </Button>
-        <Button onClick={nextPage}> Next </Button>
-      </div>
-      }
-      </ListGroup>
+    <>
+     <Button style={{marginLeft:'18px', backgroundColor:'#ffb3b3'}} onClick={toggleView} >{settingContext.completed.toString()}</Button>
+        <div style={{marginLeft:'10%'}}>
+            {activeList.map(item => (
+        <Card style={{width:'30%', marginBottom:'5px',backgroundColor:'#ffb3b3'}} interactive={true} elevation={Elevation.TWO} key={item.id}>
+          <p>{item.text}</p>
+          <p><small>Assigned to: {item.assignee}</small></p>
+          <p><small>Difficulty: {item.difficulty}</small></p>
+          <div onClick={() => props.toggleComplete(item.id)}>Complete: {item.complete.toString()}</div>
+          <button onClick ={() => props.deleteItem(item.id)}>Delete</button>
+        </Card>
+      ))}
+     {activePage>1 && <Button style={{backgroundColor:'#ffb3b3'}} onClick={()=>{setActivePage(activePage-1)}}>prev</Button>}
+        {pages()}
+      {activePage<numOfPages && <Button style={{backgroundColor:'#ffb3b3'}} onClick={()=>{setActivePage(activePage+1)}} >next</Button>}
+
+        </div>
+      </>
     
   );
 }

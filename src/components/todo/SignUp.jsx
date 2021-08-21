@@ -1,75 +1,69 @@
-import { setState } from 'expect';
-import React,{useState, useContext} from 'react';
-import { AuthContext } from '../../context/auth/authContext';
+import React, { useState, useContext } from "react";
+import {AuthContext } from "../../context/auth/authContext";
+import { If, Else, Then } from "react-if";
 import { Button } from "@blueprintjs/core";
-import './form.css'
-
-function If (props){
-  return props.condition ? props.children : null;
-};
 
 export default function SignUp() {
-  const authContext = useContext (AuthContext);
+  const authContext = useContext(AuthContext);
+  const [userName, setUserName] = useState('');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [role, setRole] = useState('user');
 
-  const [state, setstate] = useState({
-    userName:'',
-    password:'',
-    email:'',
-    role:'user',
-  });
+  function changeUsername(e) {
+		setUserName(e.target.value);
+	}
 
-  function handleChange (e){
-    let value = e.target.value;
-    let name = e.target.name;
+	function changePassword(e) {
+		setPassword(e.target.value);
+	}
+  function changeEmail(e) {
+		setEmail(e.target.value);
+	}
 
-    setState ({
-      ...state,
-      [name]:value,
-    });
-  };
+	function handleChangeRole(e) {
+		setRole(e.target.value);
+	}
 
-  function handleSubmit (e){
+
+
+  function handleSubmit(e) {
     e.preventDefault();
-    authContext.signUp(state.userName,state.password,state.email,state.role);
-  };
-
+    authContext.signUp(userName, password, email, role);
+  }
 
   return (
     <>
-      <If condition ={authContext.loginState}>
-        <></>
+      <If condition={authContext.loggedIn}>
+        <Then>
+          <div></div>
+        </Then>
+        <Else>
+          <form onSubmit={handleSubmit}>
+            <input
+              required
+              type="email"
+              placeholder="email"
+              name="email"
+              onChange={changeEmail}
+            />
+            <input
+              required
+              placeholder="UserName"
+              name="username"
+              onChange={changeUsername}
+            />
+            <input
+              required
+              placeholder="Password"
+              name="password"
+              onChange={changePassword}
+            />
+            <input placeholder="Role" name="role" onChange={handleChangeRole} />
+            <Button style={{backgroundColor:'#ffb3b3'}} type="submit">Sign Up</Button>
+          </form>
+        </Else>
       </If>
-      <If condition ={!authContext.loginState}>
-        <form onSubmit={handleSubmit}>
-          <input
-            required
-            type='email'
-            placeholder='email'
-            name='email'
-            onChange={handleChange}
-          />
-          <input
-            required
-            placeholder='UserName'
-            name='username'
-            onChange={handleChange}
-          />
-          <input
-            required
-            placeholder='Password'
-            name='password'
-            onChange={handleChange}
-          />
-          <input
-            placeholder='Role'
-            name='role'
-            onChange={handleChange}
-          />
-          <button type='submit'>Sign Up</button>
-          
-        </form>
-      </If>
-      
     </>
   );
 }
