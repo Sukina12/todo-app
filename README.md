@@ -34,6 +34,6 @@
 ![UML](UML.PNG)
 
 ### Deployment:
-[My URL](https://todo-app-react-sukina.netlify.app/)
+[My URL](https://todo-app-sukina.netlify.app/)
 
 
