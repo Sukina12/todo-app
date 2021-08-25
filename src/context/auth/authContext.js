@@ -46,11 +46,12 @@ export default function Auth(props) {
     }
   };
 
-  async function signUp(userName, password, role) {
+  async function signUp(email,username, password, role) {
     try {
       let response = await axios
         .post(`${API}/signup`, {
-          userName:userName,
+          email:email,
+          username:username,
           password:password,
           role:role,
         });

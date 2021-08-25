@@ -6,7 +6,7 @@ import { Button } from "@blueprintjs/core";
 export default function SignIn() {
   const authContext = useContext(AuthContext);
   const [userInfo, setUserInfo] = useState({
-    userName:  '',
+    username:  '',
     password: '',
   });
 
@@ -22,7 +22,7 @@ export default function SignIn() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    authContext.signIn(userInfo.userName, userInfo.password);
+    authContext.signIn(userInfo.username, userInfo.password);
   }
   return (
     <div>

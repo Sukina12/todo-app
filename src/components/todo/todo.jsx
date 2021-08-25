@@ -9,10 +9,12 @@ import Header from "../header/Header";
 // import { v4 as uuid } from "uuid";
 import "@blueprintjs/core/lib/css/blueprint.css";
 import Options from "./Options";
-import UseAxios from '../../hooks/useAxios'
+import UseAxios from '../../hooks/useAxios';
+import {AuthContext } from "../../context/auth/authContext";
+import { If, Else, Then } from "react-if";
 
 const ToDo = () => {
-  
+  const authContext = useContext(AuthContext);
   // const [list, setList] = useState([]);
   const [incomplete, setIncomplete] = useState([]);
   const [list,_addItem,_deleteComplete,_toggleComplete,_getTodoItems]=UseAxios();
@@ -64,6 +66,9 @@ const ToDo = () => {
     <>
       <h1 style={{color:'#ffb3b3'}}>To Do App</h1>
       <SignIn /> <SignUp />
+
+      <If condition={authContext.loggedIn}>
+        <Then>
       <Header list ={list}/>
       <section className="todo">
         <div>
@@ -80,6 +85,11 @@ const ToDo = () => {
           />
         </div>
       </section>
+        </Then>
+        <Else>
+          <div></div>
+        </Else>
+      </If>
     </>
   );
 };

@@ -5,9 +5,10 @@ import { Button } from "@blueprintjs/core";
 
 export default function SignUp() {
   const authContext = useContext(AuthContext);
-  const [userName, setUserName] = useState('');
+  const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
-  // const [email, setEmail] = useState('');
+ 
+  const [email, setEmail] = useState('');
   const [role, setRole] = useState('user');
 
   function changeUsername(e) {
@@ -29,7 +30,7 @@ export default function SignUp() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    authContext.signUp(userName, password, role);
+    authContext.signUp(email,username, password, role);
   }
 
   return (
@@ -50,7 +51,7 @@ export default function SignUp() {
             <input
               required
               type='text'
-              placeholder="UserName"
+              placeholder="Username"
               name="username"
               onChange={changeUsername}
             />

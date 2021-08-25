@@ -5,23 +5,14 @@ const todoAPI = "https://api-js401.herokuapp.com/api/v1/todo";
 function UseAxios() {
   const [list, setList] = useState([]);
 
-  function _deleteComplete(id) {
-    let url = `${todoAPI}/${id}`;
-    axios
-      .delete(url, {
-        headers: {
-          mode: "cors",
-          cache: "no-cache",
-          "Content-Type": "application/json",
-        },
-      })
-      .then((res) => {
-        const items = list.filter((item) => {
-          item._id !== id;
-        })
-        setList(items);
-    });
-    _getTodoItems();
+  async function _deleteComplete(_id) {
+     // if (user.capabilities.includes('delete')) {
+      let a = await axios.delete(`${todoAPI}/${_id}`)
+      console.log(a);
+      let c = (await axios.get(todoAPI)).data.results
+      console.log(c);
+      setList(c);
+  // } else { alert("you cant delete") }
   }
 
   function _addItem(item) {
